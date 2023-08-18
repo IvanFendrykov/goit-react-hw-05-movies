@@ -12,3 +12,9 @@ export const CastContainer = styled.div`
   gap: ${props => props.theme.space[4]}px;
   padding-top: ${props => props.theme.space[4]}px;
 `;
+export const Message = styled.p`
+  padding-top: ${props => props.theme.space[4]}px;
+  padding-left: ${props => props.theme.space[4]}px;
+  font-size: ${props => props.theme.fontSizes.l};
+  font-weight: ${props => props.theme.fontWeights.normal};
+`;

@@ -4,7 +4,7 @@ import { Loader } from 'components/Loader/Loader';
 
 import { getMovieCredits } from 'services/movie-service';
 import CastCard from 'components/CastCard/CastCard';
-import { CastContainer } from './Cast.styled';
+import { CastContainer, Message } from './Cast.styled';
 
 const Cast = () => {
   const [credits, setCredits] = useState([]);
@@ -44,6 +44,9 @@ const Cast = () => {
             />
           ))}
         </CastContainer>
+      )}
+      {!isLoading && credits?.length === 0 && (
+        <Message>We don`t have any cast for this movie.</Message>
       )}
     </>
   );

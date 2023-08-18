@@ -1,24 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, useLocation } from 'react-router-dom';
-import { FcFilmReel } from 'react-icons/fc';
+import { useSearchParams } from 'react-router-dom';
 import { BiSearchAlt } from 'react-icons/bi';
+import { MoviesLists } from '../../components/MoviesList/MoviesList';
 
 import { searchMovies } from 'services/movie-service';
-import {
-  MoviesSection,
-  InputField,
-  Btn,
-  Form,
-  MoviesList,
-  StyledLink,
-} from './Movies.styled';
+import { MoviesSection, InputField, Btn, Form } from './Movies.styled';
 import { GlobalStyle } from 'components/GlobalStyle';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const location = useLocation();
 
   const query = searchParams.get('query');
 
@@ -49,16 +40,7 @@ const Movies = () => {
             Search
           </Btn>
         </Form>
-        <MoviesList>
-          {movies.map(({ title, id }) => (
-            <li key={id}>
-              <FcFilmReel />{' '}
-              <StyledLink to={`${id}`} state={{ from: location }}>
-                {title}
-              </StyledLink>
-            </li>
-          ))}
-        </MoviesList>
+        <MoviesLists movies={movies} />
       </MoviesSection>
       <GlobalStyle />
     </main>

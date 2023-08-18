@@ -1,25 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { MoviesLists } from '../../components/MoviesList/MoviesList';
 
 import { Loader } from 'components/Loader/Loader';
-import { RiPlayCircleLine } from 'react-icons/ri';
 
 import { getTrending } from 'services/movie-service';
-import { HomeSection, HomeTitle, StyledLink, MoviesList } from './Home.styled';
+import { HomeSection, HomeTitle } from './Home.styled';
 import { GlobalStyle } from 'components/GlobalStyle';
 
 const Home = () => {
-  const [trendingMovies, setTrendingMovies] = useState([]);
   const [rejected, setRejected] = useState();
   const [isLoading, setIsLoading] = useState();
-  const location = useLocation();
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     (async () => {
       try {
         setIsLoading(true);
-        const data = await getTrending();
-        setTrendingMovies(data);
+        const MoviesList = await getTrending();
+        setMovies(MoviesList);
         setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
@@ -35,17 +33,8 @@ const Home = () => {
 
         {isLoading && <Loader />}
 
-        {trendingMovies.length > 0 ? (
-          <MoviesList>
-            {trendingMovies.map(({ title, id, name }) => (
-              <li key={id}>
-                <RiPlayCircleLine />{' '}
-                <StyledLink to={`movies/${id}`} state={{ from: location }}>
-                  {title || name}
-                </StyledLink>
-              </li>
-            ))}
-          </MoviesList>
+        {movies.length > 0 ? (
+          <MoviesLists movies={movies} />
         ) : (
           isLoading === false &&
           !rejected && <div>There are no movies today...</div>
